@@ -6,6 +6,17 @@ A full-stack education portal platform built with .NET 8 (Backend) and Angular (
 
 ---
 
+## Team Members and Roles
+ 
+| Student Email                      | Name                 | Roles                                 |
+|------------------------------------|----------------------|---------------------------------------|
+| 2023lm70021@wilp.bits-pilani.ac.in | Shanthosh Kirran K S | Project Manager, Developer           |
+| 2023lm70068@wilp.bits-pilani.ac.in | Manoj D             | User Researcher, Developer           |
+| 2023lm70012@wilp.bits-pilani.ac.in | Santhosh Kumar R     | Technical Analyst, Developer         |
+| 2023lm70043@wilp.bits-pilani.ac.in | Gopinath K B         | User Researcher, Tester              |
+| 2023lm70072@wilp.bits-pilani.ac.in | Santhosh P           | Programmer, Tester                   |
+
+
 ## 🚀 Modules Overview
 
 - **Authentication and Authorization** – Secure login with role-based access.
