@@ -1,0 +1,30 @@
+<div class="login-container">
+  <div class="login-box">
+    <h2>Quality Education</h2>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          [(ngModel)]="loginData.username"
+          required
+          placeholder="Enter your username"
+        >
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="loginData.password"
+          required
+          placeholder="Enter your password"
+        >
+      </div>
+      <button type="submit" [disabled]="!loginForm.form.valid">Login</button>
+    </form>
+  </div>
+</div>
