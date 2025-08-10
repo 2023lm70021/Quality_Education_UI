@@ -1,4 +1,42 @@
-<div class="admin-container">
-  <h2>Admin Dashboard</h2>
-  <button (click)="logout()">Logout</button>
+<div class="home-container">
+  <header class="header">
+    <h1>Quality Education Platform - Admin</h1>
+    <nav class="nav-menu">
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <section class="tabs-section">
+      <div class="tabs">
+        <button class="tab-btn active">Pending Video Approvals</button>
+        <button class="tab-btn">Pending Certificate Approvals</button>
+        <button class="tab-btn">All Videos</button>
+      </div>
+      <div class="tab-content">
+        <div *ngIf="pendingVideos.length === 0">
+          <p>No pending videos for approval.</p>
+        </div>
+        <div *ngIf="pendingVideos.length > 0">
+          <div class="video-list">
+            <div class="video-card" *ngFor="let video of pendingVideos">
+              <video width="320" height="180" controls [src]="'https://localhost:7295/api/Video/stream/' + video.videoId"></video>
+              <div class="video-info">
+                <h3>{{ video.title }}</h3>
+                <p>{{ video.description }}</p>
+                <span class="views">{{ video.viewCount }} views</span>
+                <span class="date">{{ video.uploadDate | date:'medium' }}</span>
+                <span class="uploader">Uploader: {{ video.userId }}</span>
+                <span class="status">Status: {{ video.status === 0 ? 'Pending' : (video.status === 1 ? 'Approved' : 'Rejected') }}</span>
+                <div class="video-actions">
+                  <button class="approve-btn" (click)="approveVideo(video.videoId)">Approve</button>
+                  <button class="reject-btn" (click)="rejectVideo(video.videoId)">Reject</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </div>

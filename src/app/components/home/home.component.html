@@ -12,25 +12,19 @@
   </header>
 
   <main class="main-content">
-    <section class="video-grid">
-      <div class="video-card" *ngFor="let video of videos" (click)="playVideo(video)">
-        <img class="video-thumb" [src]="getThumbnail(video)" alt="Video Thumbnail">
-        <div class="video-info">
-          <h3 class="video-title">{{ video.title }}</h3>
-          <p class="video-desc">{{ video.description }}</p>
+    <section class="video-list-section">
+      <div *ngIf="videos.length === 0" class="no-videos">No videos available.</div>
+      <div class="video-list">
+        <div class="video-card" *ngFor="let video of videos">
+          <video width="320" height="180" controls [src]="'https://localhost:7295/api/Video/stream/' + video.videoId"></video>
+          <div class="video-info">
+            <h3>{{ video.title }}</h3>
+            <p>{{ video.description }}</p>
+            <span class="views">{{ video.viewCount }} views</span>
+            <span class="date">{{ video.uploadDate | date:'medium' }}</span>
+          </div>
         </div>
       </div>
     </section>
-
-    <div class="video-modal-overlay" *ngIf="selectedVideo">
-      <div class="video-modal-content">
-        <button class="close-btn" (click)="closePlayer()" aria-label="Close">&times;</button>
-        <video class="popup-video" controls [src]="getVideoUrl(selectedVideo)" autoplay></video>
-        <div class="video-details">
-          <h3>{{ selectedVideo.title }}</h3>
-          <p>{{ selectedVideo.description }}</p>
-        </div>
-      </div>
-    </div>
   </main>
 </div>
