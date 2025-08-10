@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { VideoService, Video } from '../../services/video.service';
+import { CertificateService } from '../../services/certificate.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -14,7 +16,27 @@ export class HomeComponent implements OnInit {
   videos: Video[] = [];
   selectedVideo: Video | null = null;
 
-  constructor(private router: Router, private videoService: VideoService) {}
+  onCertificateSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const title = prompt('Enter certificate title:', 'CERTIFICATE') || 'CERTIFICATE';
+      const description = prompt('Enter certificate description:', 'CERTIF') || 'CERTIF';
+      this.certificateService.uploadCertificate(file, title, description).subscribe({
+        next: (res) => {
+          alert('Certificate uploaded successfully!');
+        },
+        error: (err) => {
+          alert('Failed to upload certificate.');
+        }
+      });
+    }
+  }
+
+  constructor(
+    private router: Router,
+    private videoService: VideoService,
+    private certificateService: CertificateService
+  ) {}
 
   ngOnInit() {
     this.videoService.getAllVideos().subscribe({
