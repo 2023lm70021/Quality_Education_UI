@@ -1,3 +1,81 @@
+/* Modal Overlay and Popup Styles (forced global for Angular encapsulation) */
+:host ::ng-deep .video-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s;
+}
+
+:host ::ng-deep .video-modal-content {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  padding: 2rem 2rem 1.5rem 2rem;
+  max-width: 600px;
+  width: 95vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  animation: popupIn 0.25s;
+}
+
+:host ::ng-deep .close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 10;
+}
+:host ::ng-deep .close-btn:hover {
+  color: #e53935;
+}
+
+:host ::ng-deep .popup-video {
+  width: 100%;
+  max-width: 520px;
+  height: 320px;
+  border-radius: 8px;
+  background: #000;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+}
+
+:host ::ng-deep .video-details {
+  width: 100%;
+  text-align: left;
+}
+:host ::ng-deep .video-details h3 {
+  margin: 0 0 0.5rem 0;
+  color: #357abd;
+  font-size: 1.2rem;
+}
+:host ::ng-deep .video-details p {
+  color: #444;
+  margin: 0;
+  font-size: 1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes popupIn {
+  from { transform: scale(0.95) translateY(30px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
 .home-container {
   min-height: 100vh;
   background-color: #f5f5f5;

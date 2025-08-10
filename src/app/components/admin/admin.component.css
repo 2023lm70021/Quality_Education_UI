@@ -1,0 +1,28 @@
+/* Basic admin dashboard styles */
+.admin-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.admin-container h2 {
+  margin-bottom: 24px;
+  color: #2c3e50;
+}
+.admin-container button {
+  margin-top: 24px;
+  padding: 10px 28px;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.admin-container button:hover {
+  background: #c0392b;
+}
