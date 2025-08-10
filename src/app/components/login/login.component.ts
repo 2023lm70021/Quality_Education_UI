@@ -28,6 +28,7 @@ export class LoginComponent {
       next: (res) => {
         this.loading = false;
         if (res.token) {
+          localStorage.setItem('token', res.token);
           // Decode JWT to get role and userId
           const payload = JSON.parse(atob(res.token.split('.')[1]));
           const role = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
