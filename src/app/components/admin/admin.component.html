@@ -1,41 +1,104 @@
-<div class="home-container">
-  <header class="header">
-    <h1>Quality Education Platform - Admin</h1>
-    <nav class="nav-menu">
-      <button class="logout-btn" (click)="logout()">Logout</button>
-    </nav>
+<div class="home-container" style="font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; min-height: 100vh;">
+
+  <header class="header" style="background: #2d3e50; color: #fff; padding: 24px 0 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <div style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+      <h1 style="margin: 0; font-size: 2.2rem; letter-spacing: 1px;">Quality Education Platform <span style="font-size: 1.1rem; color: #b0c4d8;">Admin</span></h1>
+      <nav class="nav-menu">
+        <button class="logout-btn" (click)="logout()" style="background: #e74c3c; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background 0.2s;">Logout</button>
+      </nav>
+    </div>
   </header>
 
-  <main class="main-content">
+  <main class="main-content" style="max-width: 900px; margin: 32px auto 0 auto;">
     <section class="tabs-section">
-      <div class="tabs">
-        <button class="tab-btn active">Pending Video Approvals</button>
-        <button class="tab-btn">Pending Certificate Approvals</button>
-        <button class="tab-btn">All Videos</button>
+      <div class="tabs" style="display: flex; gap: 12px; margin-bottom: 24px;">
+        <button class="tab-btn" [ngClass]="{'active': activeTab === 'videos'}" (click)="activeTab = 'videos'"
+          [ngStyle]="{
+            'flex': 1,
+            'padding': '12px 0',
+            'border': 'none',
+            'border-radius': '6px 6px 0 0',
+            'background': activeTab === 'videos' ? '#fff' : '#e3eaf2',
+            'color': '#2d3e50',
+            'font-weight': 600,
+            'font-size': '1.1rem',
+            'box-shadow': activeTab === 'videos' ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
+            'cursor': 'pointer'
+          }">Pending Video Approvals</button>
+        <button class="tab-btn" [ngClass]="{'active': activeTab === 'certificates'}" (click)="activeTab = 'certificates'"
+          [ngStyle]="{
+            'flex': 1,
+            'padding': '12px 0',
+            'border': 'none',
+            'border-radius': '6px 6px 0 0',
+            'background': activeTab === 'certificates' ? '#fff' : '#e3eaf2',
+            'color': '#2d3e50',
+            'font-weight': 600,
+            'font-size': '1.1rem',
+            'box-shadow': activeTab === 'certificates' ? '0 2px 8px rgba(0,0,0,0.04)' : 'none',
+            'cursor': 'pointer'
+          }">Pending Certificate Approvals</button>
       </div>
-      <div class="tab-content">
-        <div *ngIf="pendingVideos.length === 0">
-          <p>No pending videos for approval.</p>
-        </div>
-        <div *ngIf="pendingVideos.length > 0">
-          <div class="video-list">
-            <div class="video-card" *ngFor="let video of pendingVideos">
-              <video width="320" height="180" controls [src]="'https://localhost:7295/api/Video/stream/' + video.videoId"></video>
-              <div class="video-info">
-                <h3>{{ video.title }}</h3>
-                <p>{{ video.description }}</p>
-                <span class="views">{{ video.viewCount }} views</span>
-                <span class="date">{{ video.uploadDate | date:'medium' }}</span>
-                <span class="uploader">Uploader: {{ video.userId }}</span>
-                <span class="status">Status: {{ video.status === 0 ? 'Pending' : (video.status === 1 ? 'Approved' : 'Rejected') }}</span>
-                <div class="video-actions">
-                  <button class="approve-btn" (click)="approveVideo(video.videoId)">Approve</button>
-                  <button class="reject-btn" (click)="rejectVideo(video.videoId)">Reject</button>
+      <div class="tab-content" style="background: #fff; border-radius: 0 0 12px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 32px 24px; min-height: 400px;">
+        <!-- Pending Videos Tab -->
+        <ng-container *ngIf="activeTab === 'videos'">
+          <div *ngIf="pendingVideos.length === 0">
+            <p>No pending videos for approval.</p>
+          </div>
+          <div *ngIf="pendingVideos.length > 0">
+            <div class="video-list" style="display: flex; flex-wrap: wrap; gap: 24px;">
+              <div class="video-card" *ngFor="let video of pendingVideos" style="background: #f9fafc; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 18px; width: 360px; display: flex; flex-direction: column; align-items: center;">
+                <video width="320" height="180" controls [src]="'https://localhost:7295/api/Video/stream/' + video.videoId" style="border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);"></video>
+                <div class="video-info" style="width: 100%; margin-top: 12px;">
+                  <h3 style="margin: 0 0 6px 0; font-size: 1.15rem; color: #2d3e50;">{{ video.title }}</h3>
+                  <p style="margin: 0 0 8px 0; color: #4a5a6a; font-size: 0.98rem;">{{ video.description }}</p>
+                  <span class="views" style="color: #7b8a99; font-size: 0.93rem; margin-right: 10px;">{{ video.viewCount }} views</span>
+                  <span class="date" style="color: #7b8a99; font-size: 0.93rem; margin-right: 10px;">{{ video.uploadDate | date:'medium' }}</span>
+                  <span class="uploader" style="color: #1a7bb7; font-size: 0.97rem; font-weight: 500;">Uploader: {{ video.user?.username }} <span style="color: #7b8a99;">({{ video.user?.email }})</span></span>
+                  <span class="status" [ngStyle]="{
+                    'display': 'block',
+                    'margin-top': '6px',
+                    'color': video.status === 0 ? '#e67e22' : (video.status === 1 ? '#27ae60' : '#c0392b'),
+                    'font-weight': 600
+                  }">Status: {{ video.status === 0 ? 'Pending' : (video.status === 1 ? 'Approved' : 'Rejected') }}</span>
+                  <div class="video-actions" style="margin-top: 10px; display: flex; gap: 10px;">
+                    <button class="approve-btn" (click)="approveVideo(video.videoId)" style="background: #27ae60; color: #fff; border: none; padding: 7px 18px; border-radius: 5px; font-weight: 500; cursor: pointer;">Approve</button>
+                    <button class="reject-btn" (click)="rejectVideo(video.videoId)" style="background: #c0392b; color: #fff; border: none; padding: 7px 18px; border-radius: 5px; font-weight: 500; cursor: pointer;">Reject</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </ng-container>
+        <!-- Pending Certificates Tab -->
+        <ng-container *ngIf="activeTab === 'certificates'">
+          <div *ngIf="pendingCertificates.length === 0">
+            <p>No pending certificates for approval.</p>
+          </div>
+          <div *ngIf="pendingCertificates.length > 0">
+            <div class="certificate-list" style="display: flex; flex-wrap: wrap; gap: 24px;">
+              <div class="certificate-card" *ngFor="let cert of pendingCertificates" style="background: #f9fafc; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 18px; width: 360px; display: flex; flex-direction: column; align-items: flex-start;">
+                <div class="certificate-info" style="width: 100%;">
+                  <h3 style="margin: 0 0 6px 0; font-size: 1.15rem; color: #2d3e50;">{{ cert.title }}</h3>
+                  <p style="margin: 0 0 8px 0; color: #4a5a6a; font-size: 0.98rem;">{{ cert.description }}</p>
+                  <span class="date" style="color: #7b8a99; font-size: 0.93rem; margin-right: 10px;">{{ cert.uploadDate | date:'medium' }}</span>
+                  <span class="uploader" style="color: #1a7bb7; font-size: 0.97rem; font-weight: 500;">Uploader: {{ cert.user?.username }} <span style="color: #7b8a99;">({{ cert.user?.email }})</span></span>
+                  <span class="status" [ngStyle]="{
+                    'display': 'block',
+                    'margin-top': '6px',
+                    'color': cert.status === 0 ? '#e67e22' : (cert.status === 1 ? '#27ae60' : '#c0392b'),
+                    'font-weight': 600
+                  }">Status: {{ cert.status === 0 ? 'Pending' : (cert.status === 1 ? 'Approved' : 'Rejected') }}</span>
+                  <div class="certificate-actions" style="margin-top: 10px; display: flex; gap: 10px;">
+                    <button class="download-btn" (click)="downloadCertificate(cert.certificateId, cert.filePath)" style="background: #2980b9; color: #fff; border: none; padding: 7px 18px; border-radius: 5px; font-weight: 500; cursor: pointer;">Download</button>
+                    <button class="approve-btn" (click)="approveCertificate(cert.certificateId)" style="background: #27ae60; color: #fff; border: none; padding: 7px 18px; border-radius: 5px; font-weight: 500; cursor: pointer;">Approve</button>
+                    <button class="reject-btn" (click)="rejectCertificate(cert.certificateId)" style="background: #c0392b; color: #fff; border: none; padding: 7px 18px; border-radius: 5px; font-weight: 500; cursor: pointer;">Reject</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </section>
   </main>

@@ -1,30 +1,31 @@
-<div class="home-container">
-  <header class="header">
-    <h1>Quality Education Platform - Teacher</h1>
-    <nav class="nav-menu">
-      <!-- <a href="#dashboard" class="nav-link">Dashboard</a>
-      <a href="#courses" class="nav-link">Courses</a>
-      <a href="#profile" class="nav-link">Profile</a> -->
-            <h2>Welcome, Teacher!</h2>
-      <button class="logout-btn" (click)="logout()">Logout</button>
-    </nav>
+<div class="home-container" style="font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; min-height: 100vh;">
+  <header class="header" style="background: #2d3e50; color: #fff; padding: 24px 0 16px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+    <div style="display: flex; align-items: center; justify-content: space-between; max-width: 900px; margin: 0 auto;">
+      <div>
+        <h1 style="margin: 0; font-size: 2.2rem; letter-spacing: 1px;">Quality Education Platform <span style='font-size:1.1rem;color:#b0c4d8;'>Teacher</span></h1>
+        <h2 style="margin: 8px 0 0 0; font-size: 1.25rem; color: #e3eaf2; font-weight: 400;">Welcome, Teacher!</h2>
+      </div>
+      <nav class="nav-menu" style="display: flex; gap: 12px; align-items: center;">
+        <button class="logout-btn" (click)="logout()" style="background: #e74c3c; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background 0.2s;">Logout</button>
+      </nav>
+    </div>
   </header>
 
-  <main class="main-content">
-    <section class="welcome-section">
+  <main class="main-content" style="max-width: 900px; margin: 32px auto 0 auto;">
+    <section class="welcome-section" style="margin-bottom: 24px;">
       <input type="file" #videoInput style="display:none" accept="video/*" (change)="onVideoSelected($event)">
-      <button class="upload-btn" (click)="videoInput.click()">Upload Video</button>
+      <button class="upload-btn" (click)="videoInput.click()" style="background: #2980b9; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; font-weight: 500; cursor: pointer; transition: background 0.2s;">Upload Video</button>
     </section>
     <section class="video-list-section">
-      <div *ngIf="videos.length === 0" class="no-videos">No videos uploaded yet.</div>
-      <div class="video-list">
-        <div class="video-card" *ngFor="let video of videos">
-          <video width="320" height="180" controls [src]="'https://localhost:7295/api/Video/stream/' + video.videoId"></video>
-          <div class="video-info">
-            <h3>{{ video.title }}</h3>
-            <p>{{ video.description }}</p>
-            <span class="views">{{ video.viewCount }} views</span>
-            <span class="date">{{ video.uploadDate | date:'medium' }}</span>
+      <div *ngIf="videos.length === 0" class="no-videos" style="text-align: center; color: #7b8a99; font-size: 1.1rem; margin-top: 40px;">No videos uploaded yet.</div>
+      <div class="video-list" style="display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;">
+        <div class="video-card" *ngFor="let video of videos" style="background: #fff; border-radius: 14px; box-shadow: 0 4px 16px rgba(44,62,80,0.08); padding: 22px 18px 18px 18px; width: 360px; display: flex; flex-direction: column; align-items: center; transition: box-shadow 0.2s, transform 0.2s; cursor: pointer; border: 1.5px solid #e3eaf2; margin-bottom: 8px;" onmouseover="this.style.boxShadow='0 8px 24px rgba(44,62,80,0.13)';this.style.transform='translateY(-4px) scale(1.025)';" onmouseout="this.style.boxShadow='0 4px 16px rgba(44,62,80,0.08)';this.style.transform='none';">
+          <video width="320" height="180" controls [src]="'https://localhost:7295/api/Video/stream/' + video.videoId" style="border-radius: 8px; box-shadow: 0 2px 8px rgba(41,128,185,0.10);"></video>
+          <div class="video-info" style="width: 100%; margin-top: 14px;">
+            <h3 style="margin: 0 0 8px 0; font-size: 1.18rem; color: #2d3e50; font-weight: 600; letter-spacing: 0.5px;">{{ video.title }}</h3>
+            <p style="margin: 0 0 10px 0; color: #4a5a6a; font-size: 1.01rem;">{{ video.description }}</p>
+            <span class="views" style="color: #1a7bb7; font-size: 0.97rem; margin-right: 12px; font-weight: 500;">{{ video.viewCount }} views</span>
+            <span class="date" style="color: #7b8a99; font-size: 0.95rem;">{{ video.uploadDate | date:'medium' }}</span>
           </div>
         </div>
       </div>

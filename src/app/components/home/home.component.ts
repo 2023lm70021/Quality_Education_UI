@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { VideoService, Video } from '../../services/video.service';
 import { CertificateService } from '../../services/certificate.service';
+import { RoleService } from '../../services/role.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -19,6 +20,11 @@ export class HomeComponent implements OnInit {
   onCertificateSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
+      const maxSizeMB = 10;
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        alert('File size must be less than 10 MB.');
+        return;
+      }
       const title = prompt('Enter certificate title:', 'CERTIFICATE') || 'CERTIFICATE';
       const description = prompt('Enter certificate description:', 'CERTIF') || 'CERTIF';
       this.certificateService.uploadCertificate(file, title, description).subscribe({
@@ -35,7 +41,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private videoService: VideoService,
-    private certificateService: CertificateService
+    private certificateService: CertificateService,
+    private roleService: RoleService
   ) {}
 
   ngOnInit() {
@@ -55,7 +62,11 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+    this.roleService.clear();
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
   }
 
   getThumbnail(video: Video): string {
