@@ -17,6 +17,12 @@ export interface Video {
   approvalDate: string;
   viewCount: number;
   videoStatus: number;
+  user?: {
+    userId: number;
+    username: string;
+    email: string;
+    // ...other user fields if needed
+  };
 }
 
 @Injectable({ providedIn: 'root' })

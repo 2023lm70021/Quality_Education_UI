@@ -54,6 +54,10 @@ export class TeacherComponent implements OnInit {
   }
 
   logout() {
-    this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+    this.roleService.clear();
+    this.router.navigate(['/login']).then(() => {
+      window.location.reload();
+    });
   }
 }
