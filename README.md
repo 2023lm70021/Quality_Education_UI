@@ -5,6 +5,7 @@
 A full-stack education portal platform built with .NET 8 (Backend) and Angular (Frontend) supporting learning content, assessments, and community engagement.
 
 ---
+The application Diagram file is named Diagram.cs and is located in the main branch
 
 ## Team Members and Roles
  
